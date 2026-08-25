@@ -6,7 +6,7 @@
 
 ## What It Does
 
-The wizard is in trouble (again). You craft spells by combining element runes (Fire, Ice, Lightning, Arcane, Heal) and modifiers (Amplify, Chain, Bounce, Pierce). Mix them in the crafting circle, cast the spell, and help the wizard through 8 quests. Wrong spell? No game-over—just a funny message and try again.
+The wizard is in trouble (again). You craft spells by combining element runes (Fire, Ice, Lightning, Arcane, Heal) and modifiers (Amplify, Chain, Bounce, Pierce). Mix them in the crafting circle, cast the spell, and help the wizard through 14 quests across 3 chapters. Wrong spell? No game-over—just a funny message and try again.
 
 ## How to Play
 
