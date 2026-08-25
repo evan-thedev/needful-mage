@@ -2,17 +2,21 @@
 
 **A native iOS spell-crafting game.** Help a wizard who keeps getting stuck by combining magical runes to create the right spells—Fireball, Chain Lightning, and more.
 
+▶️ **[Play on your phone](https://evan-thedev.github.io/needful-mage/)** (no install needed)
+
 ## What It Does
 
 The wizard is in trouble (again). You craft spells by combining element runes (Fire, Ice, Lightning, Arcane, Heal) and modifiers (Amplify, Chain, Bounce, Pierce). Mix them in the crafting circle, cast the spell, and help the wizard through 8 quests. Wrong spell? No game-over—just a funny message and try again.
 
 ## How to Run
 
+### Play in Browser (Easiest)
+Just open **[https://evan-thedev.github.io/needful-mage/](https://evan-thedev.github.io/needful-mage/)** on your phone or desktop. Works in Safari, Chrome, or any modern browser.
+
+### Build Native iOS App
 1. **Open** `NeedfulMage/NeedfulMage.xcodeproj` in Xcode 15.4+
 2. **Select** an iOS 17+ simulator or device
 3. **Run** with `Cmd+R`
-
-That's it. The app launches, and you can start crafting spells immediately.
 
 ## Tech Stack
 

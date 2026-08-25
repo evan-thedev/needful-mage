@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Needful Mage 🧙‍♂️</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        <div class="quest-counter" id="questCounter">Quest 1 / 8</div>
+
+        <!-- Victory Screen (hidden initially) -->
+        <div id="victoryScreen" class="victory-screen hidden">
+            <div class="victory-content">
+                <div class="victory-emoji">🎉</div>
+                <h1>Master Spellcrafter!</h1>
+                <p>You've helped the wizard through all their troubles!</p>
+                <div class="mastered-spells" id="masteredList"></div>
+                <button class="btn btn-primary" onclick="game.resetGame()">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Main Game -->
+        <div id="gameScreen">
+            <!-- Wizard Request Card -->
+            <div class="wizard-card">
+                <div class="wizard-header">
+                    <span class="wizard-emoji">🧙‍♂️</span>
+                    <span class="wizard-title">The Wizard</span>
+                </div>
+                <div class="wizard-message" id="wizardMessage">
+                    Help! The brazier's gone out and I can't see my spellbook!
+                </div>
+            </div>
+
+            <!-- Crafting Circle -->
+            <div class="crafting-section">
+                <h3>Crafting Circle</h3>
+                <div class="crafting-circle">
+                    <div class="circle-content" id="circleContent">
+                        <span class="hint">Select runes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Runes Section -->
+            <div class="runes-section">
+                <h3>Elements</h3>
+                <div class="runes-grid" id="elementsGrid"></div>
+
+                <div id="modifiersSection" class="hidden">
+                    <h3>Modifiers</h3>
+                    <div class="runes-grid" id="modifiersGrid"></div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-clear" onclick="game.clearRecipe()">Clear</button>
+                <button class="btn btn-craft" id="craftBtn" onclick="game.craftSpell()" disabled>Craft</button>
+                <button class="btn btn-cast hidden" id="castBtn" onclick="game.castSpell()">Cast!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for results -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button class="btn btn-primary" id="modalBtn" onclick="game.closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script src="spell-crafter.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
