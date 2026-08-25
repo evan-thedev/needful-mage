@@ -132,6 +132,30 @@ const WIZARD_REQUESTS = [
         acceptableSpells: ['Mend', 'Mass Heal', 'Regenerating Ward', 'Cauterize'],
         successMessage: "*GLOW* Phew! Still human. Still wizard. Crisis averted!",
         failureMessage: "I'm starting to croak! HEALING, please!"
+    },
+    {
+        message: "My rival enchanted my shoes to dance uncontrollably! I need amplified arcane power to break the hex!",
+        acceptableSpells: ['Greater Ward', 'Bouncing Arcane Bolt'],
+        successMessage: "YES! The shoes stop mid-jig. My poor feet... thank you!",
+        failureMessage: "Still dancing! I need strong arcane magic to counter the enchantment!"
+    },
+    {
+        message: "The potion cabinet's lock is frozen AND shocked! I need ice AND lightning together to neutralize it!",
+        acceptableSpells: ['Hailstorm', 'Storm Shield'],
+        successMessage: "*CLICK* The lock releases! My ingredients are safe again!",
+        failureMessage: "The lock's still buzzing and frozen solid. Ice and lightning combined, please!"
+    },
+    {
+        message: "There's a fire sprite trapped in my teapot and it's getting angry! Extinguish it with water magic!",
+        acceptableSpells: ['Steam Blast', 'Frostbolt', 'Blizzard'],
+        successMessage: "*HISSSSS* The sprite escapes as harmless steam. That was close!",
+        failureMessage: "The sprite's getting hotter! I need cooling magic fast!"
+    },
+    {
+        message: "My midnight snack came alive and it's challenging me to a duel! Hit it with overwhelming elemental force!",
+        acceptableSpells: ['Inferno', 'Plasma Bolt', 'Thunderstorm', 'Cataclysm', 'Chaos Orb'],
+        successMessage: "KA-BOOM! My sandwich is... well, crumbs now. But at least it's not attacking anymore!",
+        failureMessage: "The sandwich parries! I need something with SERIOUS magical firepower!"
     }
 ];
 
@@ -146,10 +170,12 @@ class Game {
         this.availableModifiers = [];
         this.craftedSpell = null;
         this.masteredSpells = new Set();
+        this.masteredRecipes = new Map();
         this.failCount = 0;
         this.endlessMode = false;
         this.endlessScore = 0;
         this.endlessStreak = 0;
+        this.bestStreak = parseInt(localStorage.getItem('needfulMage_bestStreak') || '0');
         this.loadProgress();
         this.init();
     }
@@ -202,7 +228,17 @@ class Game {
         Array.from(this.masteredSpells).sort().forEach(spellName => {
             const btn = document.createElement('button');
             btn.className = 'spell-quick-cast';
-            btn.textContent = spellName;
+            
+            const recipe = this.masteredRecipes.get(spellName);
+            let recipeHint = '';
+            if (recipe) {
+                const runes = [];
+                recipe.elements.forEach(id => runes.push(Elements[id.toUpperCase()].emoji));
+                recipe.modifiers.forEach(id => runes.push(Modifiers[id.toUpperCase()].emoji));
+                recipeHint = `<span class="recipe-hint">${runes.join(' ')}</span>`;
+            }
+            
+            btn.innerHTML = `${spellName}${recipeHint}`;
             btn.onclick = () => this.quickCast(spellName);
             book.appendChild(btn);
         });
@@ -337,6 +373,7 @@ class Game {
         const result = this.crafter.craft(this.selectedElements, this.selectedModifiers);
         if (result.success) {
             this.craftedSpell = result.spell;
+            this.showCraftParticles();
             this.showModal(`You've crafted: ${result.spell.emoji} ${result.spell.name}!`);
         } else {
             this.craftedSpell = null;
@@ -346,6 +383,17 @@ class Game {
         this.updateUI();
     }
 
+    showCraftParticles() {
+        const circle = document.querySelector('.crafting-circle');
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'craft-particle';
+            particle.style.setProperty('--angle', `${(i * 45)}deg`);
+            circle.appendChild(particle);
+            setTimeout(() => particle.remove(), 600);
+        }
+    }
+
     castSpell() {
         if (!this.craftedSpell) return;
         const request = WIZARD_REQUESTS[this.currentQuest];
@@ -353,6 +401,10 @@ class Game {
         if (request.acceptableSpells.includes(this.craftedSpell.name)) {
             this.playCastEffect(this.craftedSpell);
             this.masteredSpells.add(this.craftedSpell.name);
+            this.masteredRecipes.set(this.craftedSpell.name, {
+                elements: [...this.selectedElements],
+                modifiers: [...this.selectedModifiers]
+            });
             this.renderSpellbook();
             this.saveProgress();
             setTimeout(() => {
@@ -380,10 +432,23 @@ class Game {
         else if (elements.includes('heal')) this.audio.castHeal();
         else this.audio.castArcane();
         
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+        
         circle.appendChild(effect);
         setTimeout(() => effect.remove(), 1000);
         this.updateWizardMood('happy');
         this.failCount = 0;
+        
+        if (this.endlessMode) {
+            this.endlessStreak++;
+            if (this.endlessStreak > this.bestStreak) {
+                this.bestStreak = this.endlessStreak;
+                localStorage.setItem('needfulMage_bestStreak', this.bestStreak);
+            }
+            this.updateEndlessUI();
+        }
     }
 
     playFizzleEffect() {
@@ -395,6 +460,11 @@ class Game {
         this.failCount++;
         if (this.failCount >= 3) {
             this.showHint();
+        }
+        
+        if (this.endlessMode) {
+            this.endlessStreak = 0;
+            this.updateEndlessUI();
         }
     }
 
@@ -548,9 +618,9 @@ class Game {
     }
 
     updateMuteButton() {
-        const btn = document.getElementById('muteBtn');
-        if (btn) {
-            btn.textContent = this.audio.muted ? '🔇' : '🔊';
+        const icon = document.querySelector('.mute-icon');
+        if (icon) {
+            icon.textContent = this.audio.muted ? '🔇' : '🔊';
         }
     }
 
@@ -638,6 +708,14 @@ class Game {
         };
         
         this.updateUI();
+    }
+
+    updateEndlessUI() {
+        const counter = document.getElementById('endlessCounter');
+        if (counter && this.endlessMode) {
+            counter.textContent = `Streak: ${this.endlessStreak} 🔥 Best: ${this.bestStreak}`;
+            counter.style.display = 'block';
+        }
     }
 }
 
