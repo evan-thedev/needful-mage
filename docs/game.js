@@ -195,7 +195,8 @@ class Game {
             currentQuest: this.currentQuest,
             availableElements: this.availableElements,
             availableModifiers: this.availableModifiers,
-            masteredSpells: Array.from(this.masteredSpells)
+            masteredSpells: Array.from(this.masteredSpells),
+            masteredRecipes: Array.from(this.masteredRecipes.entries())
         };
         localStorage.setItem('needfulMage_save', JSON.stringify(saveData));
     }
@@ -209,6 +210,7 @@ class Game {
                 this.availableElements = data.availableElements || ['fire'];
                 this.availableModifiers = data.availableModifiers || [];
                 this.masteredSpells = new Set(data.masteredSpells || []);
+                this.masteredRecipes = new Map(data.masteredRecipes || []);
             } catch (e) {
                 console.error('Failed to load save:', e);
             }
