@@ -44,10 +44,13 @@ NeedfulMage/             # iOS App
 
 ## Gameplay
 
-- **8-quest campaign** with progressive unlocking
+- **14-quest campaign** (2 chapters) with progressive unlocking
 - **5 elements** (Fire, Ice, Lightning, Arcane, Heal)
 - **4 modifiers** (Amplify, Chain, Bounce, Pierce)
-- **15+ spells**: Fireball, Frostbolt, Chain Lightning, Steam Blast, Thunderstorm, Chaos Orb, etc.
+- **18+ spells**: Fireball, Chain Lightning, Thunderstorm, Cauterize, Hailstorm, Fire Lance, etc.
+- **Spellbook**: Quick-cast mastered spells without re-picking runes
+- **Cast effects**: Visual feedback for each spell type (fire blooms, ice crystals, lightning flashes)
+- **Auto-save**: Progress saved to browser—pick up where you left off
 - **Touch-first** portrait iPhone interface
 - **No timers, no IAP, no game-overs**—cozy wizard apprentice gameplay
 
