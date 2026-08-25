@@ -476,3 +476,149 @@ body {
         font-size: 28px;
     }
 }
+
+/* Mute Button */
+.mute-btn {
+    position: fixed;
+    top: 70px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.5);
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.2s;
+}
+
+.mute-btn:active {
+    transform: scale(0.9);
+}
+
+/* Tutorial Overlay */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.tutorial-overlay.hidden {
+    display: none;
+}
+
+.tutorial-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 30px 20px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.tutorial-content h2 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+}
+
+.tutorial-content p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.tutorial-steps {
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.tutorial-step {
+    padding: 8px 0;
+    font-size: 15px;
+}
+
+.tutorial-hint {
+    font-size: 14px;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+/* Hint Box */
+.hint-box {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fbbf24;
+    color: #000;
+    padding: 12px 40px 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 500;
+    max-width: 90%;
+    animation: slideUp 0.3s ease;
+}
+
+.hint-box.hidden {
+    display: none;
+}
+
+.hint-content {
+    font-size: 14px;
+}
+
+.hint-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000;
+    padding: 4px 8px;
+}
+
+/* A2HS Hint */
+.a2hs-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4f46e5;
+    padding: 12px 40px 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 500;
+    max-width: 90%;
+    font-size: 14px;
+}
+
+.a2hs-hint.hidden {
+    display: none;
+}
+
+.a2hs-content {
+    text-align: center;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateX(-50%) translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
