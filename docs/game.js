@@ -95,12 +95,50 @@ const WIZARD_REQUESTS = [
         acceptableSpells: ['Steam Blast', 'Cauterize', 'Fire Lance'],
         successMessage: "Perfect! They're cold but usable. Your control is impeccable!",
         failureMessage: "Too much or too little! I need precise heat application!"
+    },
+    {
+        message: "My enchanted quill is writing nonsense! I need lightning-fast arcane correction magic!",
+        acceptableSpells: ['Storm Shield'],
+        successMessage: "There! The quill straightens up and writes properly again. Thank you!",
+        failureMessage: "That won't calibrate the enchantment! Lightning and arcane together, please!",
+        unlockModifiers: []
+    },
+    {
+        message: "The dimensional portal is flickering with unstable energy! Stabilize it with ice and arcane!",
+        acceptableSpells: ['Frozen Barrier', 'Blizzard'],
+        successMessage: "Excellent! The portal steadies. I can finally get my mail from the other realm!",
+        failureMessage: "It's getting worse! I need cold AND protection magic!"
+    },
+    {
+        message: "My tea has gone cold but I don't want to burn my tongue! Gentle controlled flame please!",
+        acceptableSpells: ['Fireball', 'Cauterize'],
+        successMessage: "Ahh, perfect temperature! You're a lifesaver. Or... tea-saver?",
+        failureMessage: "That's either too hot or not hot enough! Simple fire will do!"
+    },
+    {
+        message: "There's a swarm of enchanted moths eating my spellbooks! Electrify the air to drive them out!",
+        acceptableSpells: ['Spark', 'Chain Lightning', 'Storm Shield', 'Thunderstorm'],
+        successMessage: "ZAP! The moths scatter! My precious books are saved!",
+        failureMessage: "They're still munching! I need electricity to scatter them!"
+    },
+    {
+        message: "I accidentally animated my broom and now it won't stop sweeping! Chain it down with magical restraints!",
+        acceptableSpells: ['Chain Lightning', 'Bouncing Arcane Bolt'],
+        successMessage: "*SNAP* The broom stops mid-sweep and falls over. Finally, peace!",
+        failureMessage: "That didn't bind it! I need chaining or bouncing magic!"
+    },
+    {
+        message: "The moon is full and my transformation potion is EXTRA strong! Hit me with pure healing energy before I turn into a newt!",
+        acceptableSpells: ['Mend', 'Mass Heal', 'Regenerating Ward', 'Cauterize'],
+        successMessage: "*GLOW* Phew! Still human. Still wizard. Crisis averted!",
+        failureMessage: "I'm starting to croak! HEALING, please!"
     }
 ];
 
 class Game {
     constructor() {
         this.crafter = new SpellCrafter();
+        this.audio = new AudioEngine();
         this.currentQuest = 0;
         this.selectedElements = [];
         this.selectedModifiers = [];
@@ -108,6 +146,10 @@ class Game {
         this.availableModifiers = [];
         this.craftedSpell = null;
         this.masteredSpells = new Set();
+        this.failCount = 0;
+        this.endlessMode = false;
+        this.endlessScore = 0;
+        this.endlessStreak = 0;
         this.loadProgress();
         this.init();
     }
@@ -117,6 +159,9 @@ class Game {
         this.renderModifiers();
         this.renderSpellbook();
         this.updateUI();
+        this.showTutorial();
+        this.showA2HSHint();
+        this.updateMuteButton();
     }
 
     saveProgress() {
@@ -288,11 +333,14 @@ class Game {
     }
 
     craftSpell() {
+        this.audio.craftHum();
         const result = this.crafter.craft(this.selectedElements, this.selectedModifiers);
         if (result.success) {
             this.craftedSpell = result.spell;
             this.showModal(`You've crafted: ${result.spell.emoji} ${result.spell.name}!`);
         } else {
+            this.craftedSpell = null;
+            this.audio.fizzle();
             this.showModal(result.message);
         }
         this.updateUI();
@@ -324,14 +372,30 @@ class Game {
         const spellType = this.getSpellType(spell.name);
         effect.classList.add(`effect-${spellType}`);
         
+        const elements = this.selectedElements;
+        if (elements.includes('fire')) this.audio.castFire();
+        else if (elements.includes('ice')) this.audio.castIce();
+        else if (elements.includes('lightning')) this.audio.castLightning();
+        else if (elements.includes('arcane')) this.audio.castShield();
+        else if (elements.includes('heal')) this.audio.castHeal();
+        else this.audio.castArcane();
+        
         circle.appendChild(effect);
         setTimeout(() => effect.remove(), 1000);
+        this.updateWizardMood('happy');
+        this.failCount = 0;
     }
 
     playFizzleEffect() {
         const circle = document.querySelector('.crafting-circle');
         circle.classList.add('shake');
+        this.audio.fizzle();
+        this.updateWizardMood('worried');
         setTimeout(() => circle.classList.remove('shake'), 500);
+        this.failCount++;
+        if (this.failCount >= 3) {
+            this.showHint();
+        }
     }
 
     getSpellType(spellName) {
@@ -370,8 +434,12 @@ class Game {
     updateUI() {
         const progress = (this.currentQuest / WIZARD_REQUESTS.length) * 100;
         document.getElementById('progress').style.width = progress + '%';
-        document.getElementById('questCounter').textContent = `Quest ${this.currentQuest + 1} / ${WIZARD_REQUESTS.length}`;
+        const chapter = Math.floor(this.currentQuest / 5) + 1;
+        const questInChapter = (this.currentQuest % 5) + 1;
+        document.getElementById('questCounter').textContent = `Ch.${chapter} Q${questInChapter} / ${WIZARD_REQUESTS.length}`;
         document.getElementById('wizardMessage').textContent = WIZARD_REQUESTS[this.currentQuest].message;
+        
+        this.updateWizardMood(this.failCount > 0 ? 'worried' : 'desperate');
         
         const circle = document.getElementById('circleContent');
         if (this.craftedSpell) {
@@ -422,6 +490,23 @@ class Game {
             div.textContent = `✨ ${spell}`;
             list.appendChild(div);
         });
+        
+        const endlessBtn = document.createElement('button');
+        endlessBtn.className = 'btn btn-primary';
+        endlessBtn.textContent = 'Endless Mode 🔮';
+        endlessBtn.style.marginRight = '10px';
+        endlessBtn.onclick = () => {
+            document.getElementById('victoryScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            this.startEndlessMode();
+        };
+        
+        const victoryContent = document.querySelector('.victory-content');
+        const playAgainBtn = victoryContent.querySelector('button');
+        if (playAgainBtn && playAgainBtn.parentNode) {
+            playAgainBtn.parentNode.insertBefore(endlessBtn, playAgainBtn);
+        }
+        
         document.getElementById('victoryScreen').classList.remove('hidden');
         document.getElementById('gameScreen').classList.add('hidden');
     }
@@ -449,8 +534,110 @@ class Game {
 
     hardReset() {
         if (confirm('Reset all progress? This cannot be undone.')) {
-            this.resetGame();
+            localStorage.removeItem('needfulMage_save');
+            localStorage.removeItem('needfulMage_tutorial');
+            localStorage.removeItem('needfulMage_a2hs');
+            location.reload();
         }
+    }
+
+    toggleMute() {
+        const muted = this.audio.toggleMute();
+        this.updateMuteButton();
+        return muted;
+    }
+
+    updateMuteButton() {
+        const btn = document.getElementById('muteBtn');
+        if (btn) {
+            btn.textContent = this.audio.muted ? '🔇' : '🔊';
+        }
+    }
+
+    showTutorial() {
+        const seen = localStorage.getItem('needfulMage_tutorial');
+        if (!seen) {
+            document.getElementById('tutorialOverlay').classList.remove('hidden');
+        }
+    }
+
+    closeTutorial() {
+        document.getElementById('tutorialOverlay').classList.add('hidden');
+        localStorage.setItem('needfulMage_tutorial', 'true');
+    }
+
+    showHint() {
+        const request = WIZARD_REQUESTS[this.currentQuest];
+        const hints = [
+            `Try ${request.acceptableSpells[0] || 'a different combination'}!`,
+            `The wizard needs: ${request.acceptableSpells.join(' or ')}`,
+            `Look at what elements are available...`
+        ];
+        const hintText = hints[Math.floor(Math.random() * hints.length)];
+        document.getElementById('hintText').textContent = hintText;
+        document.getElementById('hintBox').classList.remove('hidden');
+    }
+
+    closeHint() {
+        document.getElementById('hintBox').classList.add('hidden');
+    }
+
+    showA2HSHint() {
+        const seen = localStorage.getItem('needfulMage_a2hs');
+        if (!seen && this.currentQuest === 2) {
+            setTimeout(() => {
+                document.getElementById('a2hsHint').classList.remove('hidden');
+            }, 5000);
+        }
+    }
+
+    closeA2HS() {
+        document.getElementById('a2hsHint').classList.add('hidden');
+        localStorage.setItem('needfulMage_a2hs', 'true');
+    }
+
+    updateWizardMood(mood) {
+        const moodEl = document.getElementById('wizardMood');
+        if (!moodEl) return;
+        
+        const moods = {
+            worried: '😰',
+            happy: '😊',
+            excited: '🤩',
+            relieved: '😌',
+            desperate: '😱'
+        };
+        
+        moodEl.textContent = moods[mood] || moods.worried;
+    }
+
+    startEndlessMode() {
+        this.endlessMode = true;
+        this.endlessScore = 0;
+        this.endlessStreak = 0;
+        this.generateEndlessQuest();
+    }
+
+    generateEndlessQuest() {
+        const allSpells = Array.from(this.masteredSpells);
+        if (allSpells.length === 0) return this.resetGame();
+        
+        const targetSpell = allSpells[Math.floor(Math.random() * allSpells.length)];
+        const messages = [
+            `Quick! I need a ${targetSpell}!`,
+            `The situation calls for ${targetSpell}!`,
+            `Only ${targetSpell} will work here!`,
+            `${targetSpell}, please! Hurry!`
+        ];
+        
+        this.currentEndlessQuest = {
+            message: messages[Math.floor(Math.random() * messages.length)],
+            acceptableSpells: [targetSpell],
+            successMessage: `Perfect! Streak: ${this.endlessStreak + 1} 🔥`,
+            failureMessage: `Not quite! That wasn't ${targetSpell}...`
+        };
+        
+        this.updateUI();
     }
 }
 

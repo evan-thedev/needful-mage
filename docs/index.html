@@ -14,6 +14,7 @@
             <div class="progress-fill" id="progress"></div>
         </div>
         <div class="quest-counter" id="questCounter">Quest 1 / 8</div>
+        <button class="mute-btn" id="muteBtn" onclick="game.toggleMute()" title="Toggle sound">🔊</button>
 
         <div id="victoryScreen" class="victory-screen hidden">
             <div class="victory-content">
@@ -28,7 +29,7 @@
         <div id="gameScreen">
             <div class="wizard-card">
                 <div class="wizard-header">
-                    <span class="wizard-emoji">🧙‍♂️</span>
+                    <span class="wizard-emoji" id="wizardMood">😰</span>
                     <span class="wizard-title">The Wizard</span>
                     <button class="reset-btn" onclick="game.hardReset()" title="Reset all progress">↻</button>
                 </div>
@@ -71,7 +72,37 @@
         </div>
     </div>
 
+    <div id="tutorialOverlay" class="tutorial-overlay hidden">
+        <div class="tutorial-content">
+            <h2>🧙‍♂️ Welcome, Apprentice!</h2>
+            <p>A wizard needs your help crafting spells!</p>
+            <div class="tutorial-steps">
+                <div class="tutorial-step">1️⃣ Read the wizard's request</div>
+                <div class="tutorial-step">2️⃣ Tap element and modifier runes to build a recipe</div>
+                <div class="tutorial-step">3️⃣ Tap <strong>Craft</strong> to create the spell</div>
+                <div class="tutorial-step">4️⃣ Tap <strong>Cast</strong> to help the wizard!</div>
+            </div>
+            <p class="tutorial-hint">💡 Wrong spell? No problem! Just try again.</p>
+            <button class="btn btn-primary" onclick="game.closeTutorial()">Let's Go!</button>
+        </div>
+    </div>
+
+    <div id="hintBox" class="hint-box hidden">
+        <div class="hint-content">
+            <strong>💡 Hint:</strong> <span id="hintText"></span>
+        </div>
+        <button class="hint-close" onclick="game.closeHint()">✕</button>
+    </div>
+
+    <div id="a2hsHint" class="a2hs-hint hidden">
+        <div class="a2hs-content">
+            📱 Add to Home Screen for a better experience!
+        </div>
+        <button class="hint-close" onclick="game.closeA2HS()">✕</button>
+    </div>
+
     <script src="spell-crafter.js"></script>
+    <script src="audio-engine.js"></script>
     <script src="game.js"></script>
 </body>
 </html>
