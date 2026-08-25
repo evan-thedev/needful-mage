@@ -68,6 +68,9 @@ class SpellCrafter {
         if (element === 'lightning' && modifiers.has('chain')) {
             return { success: true, spell: { name: 'Chain Lightning', emoji: '⚡🔗', effect: 'Lightning that arcs between targets', power: 20 }};
         }
+        if (element === 'fire' && modifiers.has('pierce')) {
+            return { success: true, spell: { name: 'Fire Lance', emoji: '🔥➡️', effect: 'A piercing beam of flame', power: 19 }};
+        }
         if (element === 'fire' && modifiers.has('amplify')) {
             return { success: true, spell: { name: 'Inferno', emoji: '🔥💥', effect: 'A massive explosion of flame', power: 25 }};
         }
@@ -94,6 +97,12 @@ class SpellCrafter {
         }
         if (elements.includes('fire') && elements.includes('lightning')) {
             return { success: true, spell: { name: 'Plasma Bolt', emoji: '🌟', effect: 'Superheated energy', power: 18 }};
+        }
+        if (elements.includes('fire') && elements.includes('heal')) {
+            return { success: true, spell: { name: 'Cauterize', emoji: '🔥💚', effect: 'Searing flames that seal wounds', power: 17 }};
+        }
+        if (elements.includes('ice') && elements.includes('lightning')) {
+            return { success: true, spell: { name: 'Hailstorm', emoji: '❄️⚡', effect: 'Frozen lightning strikes', power: 20 }};
         }
         if (elements.includes('ice') && elements.includes('arcane')) {
             return { success: true, spell: { name: 'Frozen Barrier', emoji: '🧊', effect: 'A wall of magical ice', power: 15 }};
