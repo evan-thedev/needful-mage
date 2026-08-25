@@ -7,7 +7,10 @@
 *.xcworkspace/*
 !*.xcworkspace/contents.xcworkspacedata
 xcuserdata/
+*/xcuserdata/
+*.xcuserstate
 DerivedData/
+*/DerivedData/
 *.moved-aside
 *.hmap
 *.ipa
@@ -16,9 +19,13 @@ DerivedData/
 
 # Swift Package Manager
 .build/
+*/.build/
+SpellCraft/.build/
 Packages/
 Package.resolved
 *.swiftpm
+.swiftpm/
+DerivedData/
 
 # CocoaPods
 Pods/
