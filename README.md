@@ -6,7 +6,7 @@
 
 ## What It Does
 
-The wizard is in trouble (again). You craft spells by combining element runes (Fire, Ice, Lightning, Arcane, Heal) and modifiers (Amplify, Chain, Bounce, Pierce). Mix them in the crafting circle, cast the spell, and help the wizard through 14 quests across 3 chapters. Wrong spell? No game-over—just a funny message and try again.
+The wizard is in trouble (again). You craft spells by combining element runes (Fire, Ice, Lightning, Arcane, Heal) and modifiers (Amplify, Chain, Bounce, Pierce). Mix them in the crafting circle, cast the spell, and help the wizard through 18 quests across 4 chapters. Wrong spell? No game-over—just a funny message and try again.
 
 ## How to Play
 
@@ -44,7 +44,7 @@ NeedfulMage/             # iOS App
 
 ## Gameplay
 
-- **14-quest campaign** across 3 chapters with progressive unlocking
+- **18-quest campaign** across 4 chapters with progressive unlocking
 - **5 elements** (Fire, Ice, Lightning, Arcane, Heal) + **4 modifiers** (Amplify, Chain, Bounce, Pierce)
 - **18+ spells**: Fireball, Chain Lightning, Thunderstorm, Cauterize, Hailstorm, Fire Lance, etc.
 - **Spellbook**: Quick-cast mastered spells without re-picking runes
