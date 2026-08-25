@@ -211,6 +211,28 @@ class Game {
                 this.availableModifiers = data.availableModifiers || [];
                 this.masteredSpells = new Set(data.masteredSpells || []);
                 this.masteredRecipes = new Map(data.masteredRecipes || []);
+                
+                if (this.currentQuest === 0 && this.masteredSpells.size > 0) {
+                    const quest0Spells = WIZARD_REQUESTS[0].acceptableSpells;
+                    const hasCompletedQuest0 = quest0Spells.some(spell => this.masteredSpells.has(spell));
+                    if (hasCompletedQuest0) {
+                        this.currentQuest = 1;
+                        if (WIZARD_REQUESTS[0].unlockElements) {
+                            WIZARD_REQUESTS[0].unlockElements.forEach(el => {
+                                if (!this.availableElements.includes(el)) {
+                                    this.availableElements.push(el);
+                                }
+                            });
+                        }
+                        if (WIZARD_REQUESTS[0].unlockModifiers) {
+                            WIZARD_REQUESTS[0].unlockModifiers.forEach(mod => {
+                                if (!this.availableModifiers.includes(mod)) {
+                                    this.availableModifiers.push(mod);
+                                }
+                            });
+                        }
+                    }
+                }
             } catch (e) {
                 console.error('Failed to load save:', e);
             }
@@ -416,13 +438,14 @@ class Game {
                 modifiers: [...this.selectedModifiers]
             });
             this.renderSpellbook();
-            this.saveProgress();
+            
             setTimeout(() => {
-                this.showModal(request.successMessage, () => this.nextQuest());
+                this.showToast(request.successMessage);
+                this.nextQuest();
             }, 800);
         } else {
             this.playFizzleEffect();
-            this.showModal(request.failureMessage);
+            this.showToast(request.failureMessage);
         }
     }
 
@@ -488,22 +511,38 @@ class Game {
     }
 
     nextQuest() {
+        const completedRequest = WIZARD_REQUESTS[this.currentQuest];
+        const unlocked = [];
+        
+        if (completedRequest.unlockElements) {
+            completedRequest.unlockElements.forEach(el => {
+                if (!this.availableElements.includes(el)) {
+                    this.availableElements.push(el);
+                    const element = Elements[el.toUpperCase()];
+                    unlocked.push(`${element.emoji} ${element.name}`);
+                }
+            });
+        }
+        if (completedRequest.unlockModifiers) {
+            completedRequest.unlockModifiers.forEach(mod => {
+                if (!this.availableModifiers.includes(mod)) {
+                    this.availableModifiers.push(mod);
+                    const modifier = Modifiers[mod.toUpperCase()];
+                    unlocked.push(`${modifier.emoji} ${modifier.name}`);
+                }
+            });
+        }
+        
         this.currentQuest++;
         if (this.currentQuest >= WIZARD_REQUESTS.length) {
-            this.showVictory();
+            setTimeout(() => this.showVictory(), 500);
             return;
         }
-        const request = WIZARD_REQUESTS[this.currentQuest];
-        if (request.unlockElements) {
-            request.unlockElements.forEach(el => {
-                if (!this.availableElements.includes(el)) this.availableElements.push(el);
-            });
+        
+        if (unlocked.length > 0) {
+            setTimeout(() => this.showToast(`Unlocked: ${unlocked.join(', ')}`), 1000);
         }
-        if (request.unlockModifiers) {
-            request.unlockModifiers.forEach(mod => {
-                if (!this.availableModifiers.includes(mod)) this.availableModifiers.push(mod);
-            });
-        }
+        
         this.saveProgress();
         this.clearRecipe();
         this.renderElements();
@@ -689,6 +728,18 @@ class Game {
         };
         
         moodEl.textContent = moods[mood] || moods.worried;
+    }
+
+    showToast(message) {
+        const toast = document.getElementById('unlockToast');
+        if (!toast) return;
+        
+        toast.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
     }
 
     startEndlessMode() {
