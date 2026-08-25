@@ -211,6 +211,28 @@ class Game {
                 this.availableModifiers = data.availableModifiers || [];
                 this.masteredSpells = new Set(data.masteredSpells || []);
                 this.masteredRecipes = new Map(data.masteredRecipes || []);
+                
+                if (this.currentQuest === 0 && this.masteredSpells.size > 0) {
+                    const quest0Spells = WIZARD_REQUESTS[0].acceptableSpells;
+                    const hasCompletedQuest0 = quest0Spells.some(spell => this.masteredSpells.has(spell));
+                    if (hasCompletedQuest0) {
+                        this.currentQuest = 1;
+                        if (WIZARD_REQUESTS[0].unlockElements) {
+                            WIZARD_REQUESTS[0].unlockElements.forEach(el => {
+                                if (!this.availableElements.includes(el)) {
+                                    this.availableElements.push(el);
+                                }
+                            });
+                        }
+                        if (WIZARD_REQUESTS[0].unlockModifiers) {
+                            WIZARD_REQUESTS[0].unlockModifiers.forEach(mod => {
+                                if (!this.availableModifiers.includes(mod)) {
+                                    this.availableModifiers.push(mod);
+                                }
+                            });
+                        }
+                    }
+                }
             } catch (e) {
                 console.error('Failed to load save:', e);
             }
@@ -706,6 +728,18 @@ class Game {
         };
         
         moodEl.textContent = moods[mood] || moods.worried;
+    }
+
+    showToast(message) {
+        const toast = document.getElementById('unlockToast');
+        if (!toast) return;
+        
+        toast.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
     }
 
     startEndlessMode() {

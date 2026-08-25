@@ -71,7 +71,7 @@
     <div id="modal" class="modal hidden">
         <div class="modal-content">
             <p id="modalMessage"></p>
-            <button class="btn btn-primary" id="modalBtn" onclick="game.closeModal()">OK</button>
+            <button class="btn btn-primary" id="modalBtn">OK</button>
         </div>
     </div>
 
@@ -103,6 +103,8 @@
         </div>
         <button class="hint-close" onclick="game.closeA2HS()">✕</button>
     </div>
+
+    <div id="unlockToast" class="unlock-toast" aria-live="polite"></div>
 
     <script src="spell-crafter.js"></script>
     <script src="audio-engine.js"></script>
