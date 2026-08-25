@@ -307,9 +307,11 @@ class Game {
     renderElements() {
         const grid = document.getElementById('elementsGrid');
         grid.innerHTML = '';
-        this.availableElements.forEach(elementId => {
+        const allElements = ['fire', 'ice', 'lightning', 'arcane', 'heal'];
+        allElements.forEach(elementId => {
             const element = Elements[elementId.toUpperCase()];
-            const btn = this.createRuneButton(element, 'element');
+            const isLocked = !this.availableElements.includes(elementId);
+            const btn = this.createRuneButton(element, 'element', isLocked);
             grid.appendChild(btn);
         });
     }
@@ -317,24 +319,30 @@ class Game {
     renderModifiers() {
         const section = document.getElementById('modifiersSection');
         const grid = document.getElementById('modifiersGrid');
-        if (this.availableModifiers.length === 0) {
-            section.classList.add('hidden');
-            return;
-        }
         section.classList.remove('hidden');
         grid.innerHTML = '';
-        this.availableModifiers.forEach(modifierId => {
+        
+        const allModifiers = ['amplify', 'chain', 'bounce', 'pierce'];
+        allModifiers.forEach(modifierId => {
             const modifier = Modifiers[modifierId.toUpperCase()];
-            const btn = this.createRuneButton(modifier, 'modifier');
+            const isLocked = !this.availableModifiers.includes(modifierId);
+            const btn = this.createRuneButton(modifier, 'modifier', isLocked);
             grid.appendChild(btn);
         });
     }
 
-    createRuneButton(rune, type) {
+    createRuneButton(rune, type, isLocked = false) {
         const btn = document.createElement('button');
         btn.className = 'rune-btn';
-        btn.innerHTML = `<span class="rune-emoji">${rune.emoji}</span><span class="rune-name">${rune.name}</span>`;
-        btn.onclick = () => this.toggleRune(rune.id, type, btn);
+        
+        if (isLocked) {
+            btn.classList.add('locked');
+            btn.innerHTML = `<span class="rune-emoji">${rune.emoji}</span><span class="rune-name">${rune.name}</span><span class="lock-icon">🔒</span>`;
+            btn.disabled = true;
+        } else {
+            btn.innerHTML = `<span class="rune-emoji">${rune.emoji}</span><span class="rune-name">${rune.name}</span>`;
+            btn.onclick = () => this.toggleRune(rune.id, type, btn);
+        }
         return btn;
     }
 
