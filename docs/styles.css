@@ -361,6 +361,14 @@ body {
     padding: 8px;
 }
 
+.spellbook-hint {
+    font-size: 0.8em;
+    opacity: 0.6;
+    margin: -8px 0 12px 0;
+    text-align: center;
+    font-style: italic;
+}
+
 .spell-quick-cast {
     background: rgba(155, 77, 255, 0.3);
     border: 1px solid rgba(155, 77, 255, 0.5);

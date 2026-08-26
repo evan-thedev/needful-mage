@@ -9,105 +9,105 @@ const WIZARD_REQUESTS = [
         unlockElements: ['ice']
     },
     {
-        message: "There's a gelatinous slime blocking my laboratory door! It's jiggling menacingly. Can you freeze it solid?",
+        message: "There's a gelatinous slime blocking my laboratory door! It's jiggling menacingly. Something cold to freeze it?",
         acceptableSpells: ['Frostbolt', 'Blizzard', 'Steam Blast', 'Frozen Barrier'],
         successMessage: "Perfect! *CRACK* The slime shatters like glass. Door's clear!",
-        failureMessage: "The slime jiggles unimpressed. It needs to be frozen, not... whatever that was.",
+        failureMessage: "The slime jiggles unimpressed. It needs to be frozen solid!",
         unlockElements: ['lightning']
     },
     {
-        message: "My crystal ball's power crystal has gone dark! Hit it with some electricity to charge it back up!",
+        message: "My crystal ball's power crystal has gone dark! I need a jolt of energy to charge it!",
         acceptableSpells: ['Spark', 'Chain Lightning', 'Plasma Bolt', 'Thunderstorm', 'Storm Shield'],
         successMessage: "Zap! The crystal glows bright blue again. Much better!",
-        failureMessage: "That didn't charge it. I need electrical energy, specifically!",
+        failureMessage: "That didn't charge it. I need crackling electrical energy!",
         unlockElements: ['arcane'],
         unlockModifiers: ['amplify']
     },
     {
-        message: "The enchanted mirror is shooting sparks at me! I need a shield, quickly!",
+        message: "The enchanted mirror is shooting sparks at me! I need protection, quickly!",
         acceptableSpells: ['Ward', 'Greater Ward', 'Frozen Barrier', 'Regenerating Ward', 'Storm Shield'],
         successMessage: "Ah, blessed protection! The sparks bounce harmlessly off now.",
-        failureMessage: "That's not going to protect me! I need a proper defensive spell!",
+        failureMessage: "That's not going to protect me! I need a proper barrier!",
         unlockElements: ['heal'],
         unlockModifiers: ['chain']
     },
     {
-        message: "My familiar got singed by those sparks! Poor little thing needs healing magic, stat!",
+        message: "My familiar got singed by those sparks! Poor little thing needs healing, stat!",
         acceptableSpells: ['Mend', 'Mass Heal', 'Regenerating Ward'],
         successMessage: "There we go! The little fellow perks right up. Good as new!",
         failureMessage: "That won't mend his burns. I need restorative magic!",
         unlockModifiers: ['bounce']
     },
     {
-        message: "Three fire imps appeared and they're running amok! Can you hit them all at once with lightning?",
+        message: "Three fire imps appeared and they're running amok! I need something that can hit all of them at once!",
         acceptableSpells: ['Chain Lightning', 'Thunderstorm', 'Plasma Bolt'],
         successMessage: "ZAP ZAP ZAP! All three imps poof into smoke! Magnificent work!",
-        failureMessage: "That only got one of them! I need something that chains between targets!",
+        failureMessage: "That only got one of them! I need something that spreads or chains!",
         unlockModifiers: ['pierce']
     },
     {
-        message: "The experimental potion is freezing AND boiling simultaneously! Hit it with opposing forces to stabilize it!",
+        message: "The experimental potion is freezing AND boiling simultaneously! I need opposing forces to stabilize it!",
         acceptableSpells: ['Steam Blast', 'Cataclysm'],
         successMessage: "*POOF* The potion settles into a pleasant lavender color. Crisis averted!",
-        failureMessage: "It's getting worse! I need fire AND ice together to balance it out!"
+        failureMessage: "It's getting worse! Heat and cold together might balance it out!"
     },
     {
-        message: "The spellbook tower is collapsing! I need your MOST POWERFUL spell to blast it back into place!",
+        message: "The spellbook tower is collapsing! I need your MOST POWERFUL magic to blast it back into place!",
         acceptableSpells: ['Thunderstorm', 'Cataclysm', 'Inferno', 'Chaos Orb'],
         successMessage: "BOOM! The tower rights itself with a thud. You've saved my entire library! You're a true master of the craft!",
-        failureMessage: "That's not strong enough! Pour more power into it! Try combining elements with amplification!"
+        failureMessage: "That's not strong enough! I need SERIOUS power - try amplifying something!"
     },
     {
-        message: "I tried a healing potion but now my wounds are BURNING! Quick, cauterize them with fire-infused healing!",
+        message: "I tried a healing potion but now my wounds are BURNING! I need something to seal them - healing with heat!",
         acceptableSpells: ['Cauterize'],
         successMessage: "*SIZZLE* Ow ow ow... wait, the pain's gone! That actually worked!",
-        failureMessage: "That's not going to seal the wounds properly. I need fire AND heal together!",
+        failureMessage: "That's not going to seal the wounds properly. I need fire AND healing magic together!",
         unlockModifiers: []
     },
     {
-        message: "An ice golem outside is throwing snowballs charged with lightning! Fight ice with ice AND lightning!",
+        message: "An ice golem outside is throwing snowballs charged with lightning! Fight back with the same forces!",
         acceptableSpells: ['Hailstorm'],
         successMessage: "BAM! The golem shatters into a million glittering shards! Brilliant!",
-        failureMessage: "The golem laughs at that! I need frozen lightning strikes!",
+        failureMessage: "The golem laughs at that! I need frozen lightning!",
         unlockModifiers: []
     },
     {
-        message: "My rival wizard sent a magical letter that keeps dodging my dispel! Pierce through its defenses with fire!",
+        message: "My rival wizard sent a magical letter that keeps dodging my dispel! I need something fast and penetrating!",
         acceptableSpells: ['Fire Lance'],
         successMessage: "*WHOOSH* The letter bursts into ash! Take that, Bertram!",
-        failureMessage: "It dodged again! I need piercing flames, not just any fire!",
+        failureMessage: "It dodged again! I need something that pierces defenses!",
         unlockModifiers: []
     },
     {
-        message: "The cauldron is overflowing with polymorphic ooze! Blast it with something versatile and powerful!",
+        message: "The cauldron is overflowing with polymorphic ooze! Blast it with something powerful and energetic!",
         acceptableSpells: ['Plasma Bolt', 'Thunderstorm', 'Chaos Orb', 'Cataclysm'],
         successMessage: "SPLASH! The ooze settles back down. Crisis averted!",
-        failureMessage: "That just made it angrier! Try something with more oomph!"
+        failureMessage: "That just made it angrier! Try something with more raw power!"
     },
     {
-        message: "My protective charms are flickering! Layer a regenerating shield before they fail completely!",
+        message: "My protective charms are flickering! Layer a strong shield before they fail completely!",
         acceptableSpells: ['Regenerating Ward', 'Greater Ward', 'Storm Shield', 'Frozen Barrier'],
         successMessage: "Phew! The new wards shimmer beautifully. I feel much safer now!",
         failureMessage: "That won't hold! I need proper defensive magic with staying power!"
     },
     {
-        message: "The spell components are frozen solid in the icebox! No wait, they're supposed to stay cold but I need them thawed just enough to use. This is delicate...",
+        message: "The spell components are frozen solid! I need them thawed just enough to use - something with opposing forces for precision...",
         acceptableSpells: ['Steam Blast', 'Cauterize', 'Fire Lance'],
         successMessage: "Perfect! They're cold but usable. Your control is impeccable!",
-        failureMessage: "Too much or too little! I need precise heat application!"
+        failureMessage: "Too much or too little! I need precise controlled heating!"
     },
     {
-        message: "My enchanted quill is writing nonsense! I need lightning-fast arcane correction magic!",
+        message: "My enchanted quill is writing nonsense! I need lightning-fast correction magic combined with mystical precision!",
         acceptableSpells: ['Storm Shield'],
         successMessage: "There! The quill straightens up and writes properly again. Thank you!",
-        failureMessage: "That won't calibrate the enchantment! Lightning and arcane together, please!",
+        failureMessage: "That won't calibrate the enchantment! Try combining crackling energy with protective magic!",
         unlockModifiers: []
     },
     {
-        message: "The dimensional portal is flickering with unstable energy! Stabilize it with ice and arcane!",
+        message: "The dimensional portal is flickering with unstable energy! Stabilize it with cold and protective magic!",
         acceptableSpells: ['Frozen Barrier', 'Blizzard'],
         successMessage: "Excellent! The portal steadies. I can finally get my mail from the other realm!",
-        failureMessage: "It's getting worse! I need cold AND protection magic!"
+        failureMessage: "It's getting worse! I need freezing protection!"
     },
     {
         message: "My tea has gone cold but I don't want to burn my tongue! Gentle controlled flame please!",
@@ -116,16 +116,16 @@ const WIZARD_REQUESTS = [
         failureMessage: "That's either too hot or not hot enough! Simple fire will do!"
     },
     {
-        message: "There's a swarm of enchanted moths eating my spellbooks! Electrify the air to drive them out!",
+        message: "There's a swarm of enchanted moths eating my spellbooks! Drive them out with crackling energy!",
         acceptableSpells: ['Spark', 'Chain Lightning', 'Storm Shield', 'Thunderstorm'],
         successMessage: "ZAP! The moths scatter! My precious books are saved!",
         failureMessage: "They're still munching! I need electricity to scatter them!"
     },
     {
-        message: "I accidentally animated my broom and now it won't stop sweeping! Chain it down with magical restraints!",
+        message: "I accidentally animated my broom and now it won't stop sweeping! Bind it with magic that spreads!",
         acceptableSpells: ['Chain Lightning', 'Bouncing Arcane Bolt'],
         successMessage: "*SNAP* The broom stops mid-sweep and falls over. Finally, peace!",
-        failureMessage: "That didn't bind it! I need chaining or bouncing magic!"
+        failureMessage: "That didn't bind it! I need magic that moves or connects!"
     },
     {
         message: "The moon is full and my transformation potion is EXTRA strong! Hit me with pure healing energy before I turn into a newt!",
@@ -134,19 +134,19 @@ const WIZARD_REQUESTS = [
         failureMessage: "I'm starting to croak! HEALING, please!"
     },
     {
-        message: "My rival enchanted my shoes to dance uncontrollably! I need amplified arcane power to break the hex!",
+        message: "My rival enchanted my shoes to dance uncontrollably! I need amplified mystical power to break the hex!",
         acceptableSpells: ['Greater Ward', 'Bouncing Arcane Bolt'],
         successMessage: "YES! The shoes stop mid-jig. My poor feet... thank you!",
-        failureMessage: "Still dancing! I need strong arcane magic to counter the enchantment!"
+        failureMessage: "Still dancing! I need strong mystical magic to counter the enchantment!"
     },
     {
-        message: "The potion cabinet's lock is frozen AND shocked! I need ice AND lightning together to neutralize it!",
+        message: "The potion cabinet's lock is frozen AND shocked! I need cold and lightning together to neutralize it!",
         acceptableSpells: ['Hailstorm', 'Storm Shield'],
         successMessage: "*CLICK* The lock releases! My ingredients are safe again!",
-        failureMessage: "The lock's still buzzing and frozen solid. Ice and lightning combined, please!"
+        failureMessage: "The lock's still buzzing and frozen solid. Combine freezing with electricity!"
     },
     {
-        message: "There's a fire sprite trapped in my teapot and it's getting angry! Extinguish it with water magic!",
+        message: "There's a fire sprite trapped in my teapot and it's getting angry! Cool it down with water magic!",
         acceptableSpells: ['Steam Blast', 'Frostbolt', 'Blizzard'],
         successMessage: "*HISSSSS* The sprite escapes as harmless steam. That was close!",
         failureMessage: "The sprite's getting hotter! I need cooling magic fast!"
@@ -171,6 +171,7 @@ class Game {
         this.craftedSpell = null;
         this.masteredSpells = new Set();
         this.masteredRecipes = new Map();
+        this.discoveredSpells = new Set();
         this.failCount = 0;
         this.endlessMode = false;
         this.endlessScore = 0;
@@ -196,7 +197,8 @@ class Game {
             availableElements: this.availableElements,
             availableModifiers: this.availableModifiers,
             masteredSpells: Array.from(this.masteredSpells),
-            masteredRecipes: Array.from(this.masteredRecipes.entries())
+            masteredRecipes: Array.from(this.masteredRecipes.entries()),
+            discoveredSpells: Array.from(this.discoveredSpells)
         };
         localStorage.setItem('needfulMage_save', JSON.stringify(saveData));
     }
@@ -211,6 +213,7 @@ class Game {
                 this.availableModifiers = data.availableModifiers || [];
                 this.masteredSpells = new Set(data.masteredSpells || []);
                 this.masteredRecipes = new Map(data.masteredRecipes || []);
+                this.discoveredSpells = new Set(data.discoveredSpells || []);
                 
                 if (this.currentQuest === 0 && this.masteredSpells.size > 0) {
                     const quest0Spells = WIZARD_REQUESTS[0].acceptableSpells;
@@ -248,7 +251,7 @@ class Game {
             return;
         }
 
-        book.innerHTML = '<h4>Spellbook</h4>';
+        book.innerHTML = '<h4>Spellbook</h4><p class="spellbook-hint">Tap spells to mix them</p>';
         Array.from(this.masteredSpells).sort().forEach(spellName => {
             const btn = document.createElement('button');
             btn.className = 'spell-quick-cast';
@@ -263,9 +266,30 @@ class Game {
             }
             
             btn.innerHTML = `${spellName}${recipeHint}`;
-            btn.onclick = () => this.quickCast(spellName);
+            btn.onclick = () => this.addSpellToCircle(spellName);
             book.appendChild(btn);
         });
+    }
+
+    addSpellToCircle(spellName) {
+        const recipe = this.masteredRecipes.get(spellName);
+        if (!recipe) return;
+        
+        recipe.elements.forEach(el => {
+            if (!this.selectedElements.includes(el)) {
+                this.selectedElements.push(el);
+            }
+        });
+        recipe.modifiers.forEach(mod => {
+            if (!this.selectedModifiers.includes(mod)) {
+                this.selectedModifiers.push(mod);
+            }
+        });
+        
+        this.craftedSpell = null;
+        this.renderElements();
+        this.renderModifiers();
+        this.updateUI();
     }
 
     quickCast(spellName) {
@@ -406,7 +430,14 @@ class Game {
         if (result.success) {
             this.craftedSpell = result.spell;
             this.showCraftParticles();
-            this.showModal(`You've crafted: ${result.spell.emoji} ${result.spell.name}!`);
+            
+            const isNewDiscovery = !this.discoveredSpells.has(result.spell.name);
+            if (isNewDiscovery) {
+                this.discoveredSpells.add(result.spell.name);
+                this.showToast(`✨ Discovered: ${result.spell.emoji} ${result.spell.name}!`);
+            } else {
+                this.showModal(`You've crafted: ${result.spell.emoji} ${result.spell.name}!`);
+            }
         } else {
             this.craftedSpell = null;
             this.audio.fizzle();
@@ -686,11 +717,11 @@ class Game {
     }
 
     showHint() {
-        const request = WIZARD_REQUESTS[this.currentQuest];
         const hints = [
-            `Try ${request.acceptableSpells[0] || 'a different combination'}!`,
-            `The wizard needs: ${request.acceptableSpells.join(' or ')}`,
-            `Look at what elements are available...`
+            'Try combining what you know with what you have',
+            'Mix elements, or mix a mastered spell with new runes',
+            'Sometimes simple is better, sometimes you need more power',
+            'Tap a spell in your book to use it as an ingredient'
         ];
         const hintText = hints[Math.floor(Math.random() * hints.length)];
         document.getElementById('hintText').textContent = hintText;
